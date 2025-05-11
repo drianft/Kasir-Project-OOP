@@ -45,11 +45,44 @@ class Kasir{
     private:
         vector<Barang> dataBarang;
         string userName;
+        string namaUser;
     public:
         Kasir(){}
-        void login(){
 
+        bool isAdmin(string id){
+            this->userName=id;
+
+            ifstream file("akun.txt");
+            string line;
+            while(getline(file, line)){
+                int batas = line.find("|");
+                if(batas != string::npos){
+                    string idKasir = line.substr(0, batas);
+                    string namaKasir = line.substr(batas + 1);
+
+                    if(idKasir == id||namaKasir == id){
+                        namaUser = namaKasir;
+                        return true;
+                    }
+                }
+            }
+            return false
         }
+
+        void gameAdmin(){
+            cout << "1. Lihat Stok Barang" << endl;
+            cout << "2. Tambahkan Barang" << endl;
+        }
+
+        void login(){
+            cout << "Masukkan id atau nama lengkap kamu yang terdaftar: ";
+            cin >> userName;
+            if(isAdmin(userName)){
+                cout << "Selamat datang, " << namaUser << endl;
+                gameAdmin();
+            }
+
+
 };
 
 

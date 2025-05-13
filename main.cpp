@@ -2,6 +2,8 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include <cctype>
+#include <iomanip>
 
 using namespace std;
 
@@ -32,9 +34,9 @@ class Barang{
 
         //Cetak list file barang yg ada di file TXT setelah ditambahkan
         void cetakBarang(){
-            cout << id << endl
-                << nama << endl
-                << harga << endl;
+            cout << "========== Inventori ==========" << endl;
+            cout << setw(2) << id << setw(9) << nama << right << setw(15) << harga << endl;
+            cout << "===============================" << endl;
 
             inventory();
         }
@@ -46,8 +48,34 @@ class Kasir{
         vector<Barang> dataBarang;
         string userName;
         string namaUser;
+        int nextId = 1;
     public:
         Kasir(){}
+
+        void inputBarang(){
+            string pilih;
+            do
+            {
+                cout << "Masukkan nama barang: ";
+                string nama;
+                cin.ignore();
+                getline(cin, nama);
+                cout << "Masukkan harga barang: ";
+                long harga;
+                cin >> harga;
+                int id = nextId++;
+                tambahBarang(id, nama, harga);
+                cout << "Masih mau tambahin barang? ";
+                cin >> pilih;
+            } while (pilih == "ya");
+            
+        }
+
+        void tambahBarang(int id, string nama, long harga){
+            Barang barang(id, nama, harga);
+            barang.cetakBarang();
+            dataBarang.push_back(barang);
+        }
 
         bool isAdmin(string id){
             this->userName=id;
@@ -66,12 +94,50 @@ class Kasir{
                     }
                 }
             }
-            return false
+            return false;
         }
 
         void gameAdmin(){
-            cout << "1. Lihat Stok Barang" << endl;
-            cout << "2. Tambahkan Barang" << endl;
+            Kasir x;
+            string loop = "yes";
+            int inp;
+                    do{
+                // cin.ignore();
+                cout << "1. Tambah Item\n2. Hapus Item\n3. Cari Item\n4. Tampilkan Semua\nPilih: ";
+                cin >> inp;
+                switch (inp){
+                    case 1:{
+                    inputBarang();
+                    
+                    break;
+                    }
+                    case 2:{
+                    cout << "Tambahin barang";
+                    break;
+                    }
+                    case 3:{
+                    cout << "";
+                    break;
+                    }
+                    case 4:{
+                    cout << "";
+                    break;
+                    }
+                
+                default:
+                    break;
+                }
+            cout << "Continue? (yes/no) :";
+            cin >> loop;
+            }
+            while (loop != "no");
+            // x.inputInventory();
+            // x.deleteItem();
+            // x.searchItem();
+        }
+
+        void gameUser(){
+            
         }
 
         void login(){
@@ -81,13 +147,21 @@ class Kasir{
                 cout << "Selamat datang, " << namaUser << endl;
                 gameAdmin();
             }
+            else{
+                cout <<"Selamat datang, " << namaUser << endl;
+                gameUser();
+            }
 
-
-};
+        }
+    };
 
 
 int main(){
-    Barang b1(1, "Laptop", 200000000);
+    Kasir x;
 
-    b1.cetakBarang();
+    x.login();
+
+
+    return 0;
+
 }

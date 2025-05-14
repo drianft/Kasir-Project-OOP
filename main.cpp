@@ -98,7 +98,6 @@ class Kasir{
         }
 
         void gameAdmin(){
-            Kasir x;
             string loop = "yes";
             int inp;
                     do{
@@ -136,8 +135,19 @@ class Kasir{
             // x.searchItem();
         }
 
+        void readInventory(){
+
+        }
+
         void gameUser(){
-            
+            int pilihan;
+            cout << "1. Tambahkan Barang Belanjaan\n2. Lihat isi Keranjang\n3. Checkout";
+            cin >> pilihan;
+            switch(pilihan){
+                case 1:{
+                    
+                }
+            }
         }
 
         void login(){
@@ -154,6 +164,26 @@ class Kasir{
 
         }
     };
+
+class Transaksi{
+    private:
+        struct itemTransaksi{
+            int id;
+            string nama;
+            long harga;
+            int jumlah;
+        };
+        vector<itemTransaksi> keranjang;
+        long totalHarga;
+    public:
+        void tambahKeranjang(int idBarang, const string& nama, long harga, int jumlah){
+            
+        }
+        void tampilkanKeranjang(){}
+        void checkout(){}
+
+};
+
 
 
 int main(){
